@@ -1,6 +1,6 @@
-**Multivariable Calculus**
+# Multivariable Calculus - MATH20901
 
-Notes & exercises of Dom Hutchinson for the *Multivariable Calculus, MATH20901* module at University of Bristol for the academic year *2018-19*.
-
-Lecturer - [Dr. Richard Porter](https://people.maths.bris.ac.uk/~marp/)
-Web - [Unit Page](https://people.maths.bris.ac.uk/~marp/mvcalc)
+**Lecturers** - [Dr. Richard Porter](http://www.bristol.ac.uk/maths/people/richard-porter/overview.html)<br/>
+**Links** - [Unit Page](https://www.bris.ac.uk/unit-programme-catalogue/UnitDetails.jsa?ayrCode=18%2F19&unitCode=MATH20901)<br/>
+**Credits** - 10<br/>
+**Assessment** - 100% Exam<br/>
