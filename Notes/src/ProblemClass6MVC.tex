@@ -1,0 +1,177 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\question}[1] {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% enviroments
+\lstnewenvironment{code}
+  {\lstset{mathescape=true,xleftmargin=.1\textwidth}}
+  {}
+
+% if
+\newif\ifquestions
+\questionstrue
+%\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Class 6}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Class 6}
+\fancyhead[R]{\today}
+
+\setcounter{question}{1}
+\question{
+Calculate
+$$\int_C\textbf{r}\circ d\textbf{r}$$
+where $C$ is any curve connecting the point $\textbf{r}_1$ to $\textbf{r}_2$.
+}
+
+\solution{
+\underline{Method 1}
+\[\begin{array}{rcl}
+\int_C\textbf{r}\circ d\textbf{r}&=&\int_Cd\left(\frac{1}{2}\textbf{r}\circ\textbf{r}\right)\\
+&=&\left[\frac{1}{2}\textbf{r}\circ\textbf{r}\right]_{\textbf{r}_2}^{\textbf{r}_1}\\
+&=&\frac{1}{2}|\textbf{r}_2|^2-\frac{1}{2}|\textbf{r}_1|^2
+\end{array}\]
+\underline{Method 2}
+\[\begin{array}{rrcl}
+\mathrm{Let}&f&=&\frac{1}{2}\textbf{r}\circ\textbf{r}\\
+\implies&\nabla f&=&\textbf{r}\\
+\mathrm{Since}&\nabla\left(\frac{1}{2}\textbf{r}\circ\textbf{r}\right)&=&\frac{1}{2}\nabla(r^2)\\
+&&=&\frac{2r}{2}\nabla r\\
+&&=&r\left(\frac{\textbf{r}}{r}\right)\\
+&&=&\textbf{r}
+\end{array}\]
+}
+
+\setcounter{question}{3}
+\question{
+Let $\phi$ be a scalar field. use the divergence theorem to show that
+$$\int_V\nabla\phi dV=\int_{\partial V}\phi\hat{\textbf{n}}dS$$
+}
+
+\solution{
+The Divergence Theorem states
+$$\int_V\nabla\circ\textbf{f}dV=\int_{\partial V}\textbf{f}\circ d\textbf{S}$$
+Let $\textbf{f}=\phi(\textbf{r})\textbf{a}$ where $\textbf{a}\in\reals^3$ is constant.\\
+Consider
+\[\begin{array}{rcl}
+\nabla\circ\textbf{f}&=&\nabla\circ(\phi(\textbf{r})\textbf{a})\\
+&=&(\nabla\phi)\circ\textbf{a}+\phi(\nabla\circ\textbf{a})\\
+&=&(\nabla\phi)\circ\textbf{a}
+\end{array}\]
+By applying the divergence theorem
+$$\textbf{a}\circ\int_V\nabla\phi dV = \textbf{a}\circ\int_{\partial V}\phi d\textbf{S}$$
+This holds $\forall\ \textbf{a}$ so
+$$\int_V\nabla\phi dV=\int_{\partial V}\phi d\textbf{S}=\int_{\partial V}\phi\hat{\textbf{n}}dS$$
+}
+
+\newquestion
+\qpart{
+A vector field $\textbf{F}$ is given by $\textbf{F}(x,y,z)=(xy,yz,xz)$. Calculate $\nabla\circ\textbf{F}$.
+}
+
+\spart{
+$$\nabla\circ\textbf{F}(x)=x+y+z$$
+}
+
+\qpart{
+The volume, $V$ of a tetrahedron is bounded by four triangular surfaces formed by the intersection of the planes $x=0$, $y=0$, $z=0$ and $x+y+z=1$.\\
+Calculate the volume integral
+$$\int_V\nabla\circ\textbf{F}dV$$
+}
+
+\spart{
+\[\begin{array}{rcl}
+\int_V\nabla\circ\textbf{F}dV&=&\displaystyle{\int_{x=0}^{x=1}\int_{y=0}^{y=1-x}\int_{z=0}^{z=1-x-y}(x+y+z)dzdydx}\\
+&=&\displaystyle{\int_{x=0}^{x=1}\int_{y=0}^{y=1-x}\left((x+y)(1-x-y)+\frac{1}{2}(1-x-y)^2\right)dydz}\\
+&=&...%TODO
+\end{array}\]
+}
+
+\qpart{
+State the divergence theorem and use it ot calculate the value of the integral in 5.2 by an independent method.
+}
+
+\spart{
+$\int_V\nabla\circ\textbf{F}dV=\int_{\partial V}\textbf{F}\circ d\textbf{S}$\\
+where $\partial V=S_1\cup S_2\cup S_3\cup S_4$.\\
+Let $S_1$ be the volume surface in $x=0$ plane\\
+$\implies\textbf{F}(x,y,z)=(0,yz,0)$ and $\partial\textbf{S}=\hat{\textbf{n}}dS=-\hat{\textbf{x}}dS$\\
+$\implies\textbf{F}\circ d\textbf{S}=0$ on $S_1$.\\
+Similarly $\textbf{F}\circ d\textbf{S}=0$ on $S_2$ \& $S_3$.\\
+$\implies\int_{\partial V}\textbf{F}\circ d\textbf{S}=\int_{S_4}\textbf{F}\circ d\textbf{S}$.\\
+Let $D=\{(x,y)|0<x<1,0<y<1-x\}$ and $\textbf{s}(x,y)=(x,y,1-x-y)$ for $(x,y)\in D$.\\
+Now mechanical %TODO
+}
+
+
+\question{
+If $\textbf{f}(\textbf{r})=(0,x,0)$ and $\textbf{g}(\textbf{r})=(-y,0,0)$ show that, for any closed curve $C\in\reals^3$
+$$\int_C\textbf{f}\circ d\textbf{r}=\int_C\textbf{g}\circ d\textbf{r}$$
+}
+
+\solution{
+\underline{Method 1}\\
+Consider $\int_C(\textbf{f}-\textbf{g})\circ d\textbf{r}$\\
+We want to show $\textbf{f}-\textbf{g}=\nabla f$ so that we can use the Fundamental Theorem of Calculus.\\
+This requires $\frac{\partial f}{\partial x}=g\implies f=yx$ and $\frac{\partial f}{\partial y}=x\implies f=xy$.\\
+These both produce the same result, so hold.\\
+Set $\nabla(x,y)=\textbf{f}-\textbf{g}$.
+$$\implies\int_C(\textbf{f}-\textbf{g})d\textbf{r}=\int_C\nabla \textbf{f}\circ d\textbf{r}=0$$
+Since it is a closed loop.\\
+\underline{Method 2}\\
+Set $\textbf{A}=\textbf{f}-\textbf{g}=(y,x,0)$
+\[\begin{array}{rrcll}
+\implies&\int_C\textbf{A}\circ d\textbf{r}&=&\int_C\nabla\times\textbf{A}\circ d\textbf{S}&\mathrm{Stokes'\ Theorem}\\
+&\nabla\times\textbf{A}&=&\begin{vmatrix}
+\hat{\textbf{x}} & \hat{\textbf{y}} & \hat{\textbf{z}}\\
+\partial x & \partial y & \partial z\\
+y & x & 0
+\end{vmatrix}\\
+&&=&(0,0,1-1)\\
+&&=&\textbf{0}\\
+\implies&\int_C\textbf{A}\circ d\textbf{r}&=&\int_S\nabla\times\textbf{A}\circ d\textbf{S}\\
+&&=&\int_S 0 d\textbf{S}\\
+&&=&0
+\end{array}\]
+}
+
+\end{document}

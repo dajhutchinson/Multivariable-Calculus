@@ -1,0 +1,244 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\question}[1] {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\Spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}} #1 \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% enviroments
+\lstnewenvironment{code}
+  {\lstset{mathescape=true,xleftmargin=.1\textwidth}}
+  {}
+
+% if
+\newif\ifquestions
+\questionstrue
+%\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Sheet 3}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Sheet 3}
+\fancyhead[R]{\today}
+
+\setcounter{question}{3}
+\qpart{
+Let $\phi(\textbf{r})=f(r)$, where $f$ is a function of a single variable, $r=|\textbf{r}|$. Computer $\Delta\phi$.
+}
+
+\Spart{
+\[\begin{array}{rcl}=
+\Delta\phi&=&\sum_{\alpha=1}^3\frac{\partial^2}{\partial x_\alpha^2}f(r)\\
+&=&\sum_{\alpha=1}^3\frac{\partial}{\partial x_\alpha}\left(\frac{\partial}{\partial x_\alpha}f(r)\right)\\
+&=&\sum_{\alpha=1}^3\frac{\partial}{\partial x_\alpha}\left(\frac{\partial r}{\partial x_\alpha}\frac{\partial f}{\partial r}\right)\\
+&=&f'\sum_{\alpha=1}^3\frac{\partial^2}{\partial x_\alpha^2}r\\
+&=&f'\sum_{\alpha=1}^3\frac{\partial}{\partial x_\alpha}\frac{x_\alpha}{r}\\
+&=&f'\sum_{\alpha=1}^3\left[\frac{1}{r}-x_\alpha\left(\frac{x_\alpha}{r^3}\right)\right]\\
+&=&\frac{f'}{r}\sum_{\alpha=1}^3\left[1-\frac{x_\alpha^2}{r^2}\right]\\
+&=&\frac{f'}{r}\left[3-\frac{r^2}{r^2}\right]\\
+&=&2\frac{f'}{r}
+\end{array}\]
+}
+
+\qpart{
+Let $\pmb{\mu}\in\real^3$ be a nonzero vector. Compute $\Delta\dfrac{\pmb{\mu}\circ\textbf{r}}{r^3}$.
+}
+
+\Spart{
+\[\begin{array}{rcl}
+\Delta\dfrac{\pmb{\mu}\circ\textbf{r}}{r^3}&=&\nabla\circ\left(\nabla\dfrac{\pmb{\mu}\circ\textbf{r}}{r^3}\right)\\
+\nabla\dfrac{\pmb{\mu}\circ\textbf{r}}{r^3}&=&\left(
+\dfrac{\mu_1x}{r^3},\ \dfrac{\mu_2y}{r^3},\ \dfrac{\mu_3z}{r^3}
+\right)\\
+&=&\left(
+\dfrac{\mu_1r^3-(\mu_1x)(3xr)}{r^6},\ \dfrac{\mu_2r^3-(\mu_2y)(3yr)}{r^6},\ \dfrac{\mu_3r^3-(\mu_3z)(3zr)}{r^6}
+\right)\\
+\nabla\circ\left(\nabla\dfrac{\pmb{\mu}\circ\textbf{r}}{r^3}\right)&=&\dfrac{\mu_1(-4x)r^5-\mu_1(r^2-3x^2)5xr^3}{r^{10}}
++\dfrac{\mu_2(-4y)r^5-\mu_2(r^2-3y^2)5yr^3}{r^{10}}\\
+&+&\dfrac{\mu_3(-4z)r^5-\mu_3(r^2-3z^2)5zr^3}{r^{10}}\\
+&=&\frac{3}{r^7}\left(
+\mu_1x(5x^2-3r^2)+\mu_2y(5y^2-3r^2)+\mu_3z(5z^2-3r^2)
+\right)\\
+&=&\frac{3}{r^7}\mu_ix_i(5x_i^2-3r^2)
+\end{array}\]
+}
+
+\question{
+This question concerns the transformation to elliptical coordinates $(\mu,\nu)$ given by the relation
+$$x=a\cosh\mu\cos\nu\quad y=a\sinh\mu\sin\nu$$
+where $mu\in[0,\infty),\ \nu\in[0,2\pi)$.
+}
+
+\qpart{
+Show that curves of constant $\mu$ correspond to ellipses in the $(x,y)$ plane and that curves of constant $\nu$ are hyperbolae.
+}
+
+\spart{
+Set $\mu$ to be constant.\\
+Then $\exists$ constants $b,c\in\real$ such that $\cosh\mu=b$ \& $\sinh\mu=c$.\\
+Then $x=ab\cos\nu$ \& $y=ac\sin\nu$.\\
+The general formula for an ellipse is
+$$\dfrac{x^2}{\alpha^2}+\dfrac{y^2}{\beta^2}=1$$
+Set $\alpha=ab$ \& $\beta=ac$.
+\[\begin{array}{rcl}
+\implies\frac{x^2}{\alpha^2}+\frac{y^2}{\beta^2}&=&\frac{(ab\cos\nu)^2}{(ab)^2}+\frac{(ac\sin\nu)^2}{(ac)^2}\\
+&=&\frac{a^2b^2\cos^2\nu}{a^2b^2}+\frac{a^2c^2\sin^2\nu}{a^2c^2}\\
+&=&\cos^2\nu+\sin^2\nu\\
+&=&1
+\end{array}\]
+Thus, for a constant $\mu$, this curves corresponds to the general formula of an ellipse.\\
+
+Set $\nu$ to be constant.\\
+Then $\exists$ constants $d, e\in\real$ such that $\cos\nu=d$ \& $\sin\nu=e$.\\
+Then $x=ad\cosh\mu$ \& $y=ae\sinh\mu$.\\
+The general formula for a hyperbola is
+$$\frac{y^2}{\gamma^2}-\frac{x^2}{\delta^2}=1$$
+Set $\gamma=ae$ \& $\delta=ad$.
+\[\begin{array}{rcl}
+\frac{y^2}{\gamma^2}-\frac{x^2}{\delta^2}&=&\frac{(ae\sinh\mu)^2}{(ae)^2}-\frac{(ad\cosh\mu)^2}{(ad)^2}\\
+&=&\sinh^2\mu-\cosh^2\mu\\
+&=&1
+\end{array}\]
+Thus, for a constant $\nu$, this curve corresponds to the general formula for a hyperbola.
+}
+
+\qpart{
+Derive a basis $\hat{\pmb{\mu}},\ \hat{\pmb{\nu}}$ for elliptical coordinates and, in doing so, show that the scal factors are
+$$h_\mu=h_\nu=a\sqrt{\sinh^2\mu+\sin^2\nu}$$
+Also confirm that $\hat{\pmb{\mu}}$ and $\hat{\pmb{\nu}}$ are orthogonal.
+}
+
+\Spart{
+\[\begin{array}{rcl}
+\textbf{r}&=&(a\cosh\mu\cos\nu,a\sinh\mu\sin\nu)\\
+
+\\h_\mu&=&|\frac{\partial\textbf{r}}{\partial\mu}|\\
+&=&\sqrt{(a\sinh\mu\cos\nu)^2+(a\cosh\mu\sin\nu)^2}\\
+&=&a\sqrt{\sinh^2\mu\cos^2\nu+\cosh^2\mu\sin^2\nu}\\
+&=&a\sqrt{\sinh^2\mu\cos^2\nu+(1+\sinh^2\mu)\sin^2\nu}\\
+&=&a\sqrt{\sinh^2\mu(\cos^2\nu+\sin^2\nu)+\sin^2\nu}\\
+&=&a\sqrt{\sinh^2\mu+\sin^2\nu}\\
+
+\\h_\nu&=&|\frac{\partial\textbf{r}}{\partial\nu}|\\
+&=&\sqrt{(-a\cosh\mu\sin\nu)^2+(a\sinh\mu\cos\nu)^2}\\
+&=&a\sqrt{\cosh^2\mu\sin^2\nu+\sinh^2\mu\cos^2\nu}\\
+&=&a\sqrt{\sinh^2\mu+\sin^2\nu}\\
+
+\\\hat{\pmb{\mu}}&=&\frac{1}{h_\mu}\frac{\partial\textbf{r}}{\partial\mu}\\
+&=&\frac{1}{a\sqrt{\sinh^2\mu+\sin^2\nu}}(a\sinh\mu\cos\nu,\ a\cosh\mu\sin\nu)\\
+&=&\frac{1}{\sqrt{\sinh^2\mu+\sin^2\nu}}(\sinh\mu\cos\nu,\ \cosh\mu\sin\nu)\\
+
+\\\hat{\pmb{\nu}}&=&\frac{1}{h_\nu}\frac{\partial\textbf{r}}{\partial\nu}\\
+&=&\frac{1}{a\sqrt{\sinh^2\mu+\sin^2\nu}}(-a\cosh\mu\sin\nu,\ a\sinh\mu\cos\nu)\\
+&=&\frac{1}{\sqrt{\sinh^2\mu+\sin^2\nu}}(-\cosh\mu\sin\nu,\ \sinh\mu\cos\nu)\\
+
+\\\hat{\pmb{\mu}}\circ\hat{\pmb{\nu}}&=&\frac{1}{\sinh^2\mu+\sin^2\nu}\left[(\sinh\mu\cos\nu)(-\cosh\mu\sin\nu)+(\cosh\mu\sin\nu)(\sinh\mu\cos\nu)\right]\\
+&=&\frac{1}{\sinh^2\mu+\sin^2\nu}[0]\\
+&=&0
+\end{array}\]
+Since $\hat{\pmb{\mu}}\circ\hat{\pmb{\nu}}=0$ then $\hat{\pmb{\mu}}$ \& $\hat{\pmb{\nu}}$ are orthogonal.\\
+}
+
+\qpart{
+Calculate the Jacobian determinant. Is the mapping of coordinates always invertible? If not, when is it non-invertible?
+}
+
+\Spart{
+\[\begin{array}{rcl}
+J_\textbf{r}&=&\begin{vmatrix}
+h_\mu[\hat{\pmb{\mu}}]_1 & h_\nu[\hat{\pmb{\nu}}]_1\\
+h_\mu[\hat{\pmb{\mu}}]_2 & h_\nu[\hat{\pmb{\nu}}]_2\\
+\end{vmatrix}\\
+&=&\begin{vmatrix}
+a\sinh\mu\cos\nu & -a\cosh\mu\sin\nu\\
+a\cosh\mu\sin\nu & a\sinh\mu\cos\nu
+\end{vmatrix}\\
+&=&(a\sin\mu\cos\nu)^2+(a\cosh\mu\sin\nu)^2\\
+&=&a^2\left[\sinh^2\mu\cos^2\nu+\cosh^2\mu\sin^2\nu]\right]\\
+&=&a^2\left[\sinh^2\mu+\sin^2\nu\right]
+\end{array}\]
+This coordinate mapping is not always invertible.\\
+It is not invertible if $(\mu,\nu)=(0,\pi n)\ \forall\ n\in\nats$.\\
+}
+
+\qpart{
+Express $\nabla f$ in elliptical coordinates.
+}
+
+\Spart{
+\[\begin{array}{rcl}
+\nabla f(x,y)&=&\nabla f(a\cosh\mu\cos\nu,\ a\sinh\mu\sin\nu)\\
+&=&\frac{\hat{\pmb{\mu}}}{h_\mu}\frac{\partial f}{\partial \mu}+\frac{\hat{\pmb{\nu}}}{h_\nu}\frac{\partial f}{\partial \nu}\\
+&=&\frac{1}{a(\sinh^2\mu+\sin^2\nu)}\left[(a\sinh\mu\cos\nu,\ a\cosh\mu\sin\nu)\frac{\partial f}{\partial\mu}+(-a\cosh\mu\sin\nu,\ a\sinh\mu\cos\nu)\frac{\partial f}{\partial\nu}\right]\\
+&=&\frac{1}{\sinh^2\mu+\sin^2\nu}\left[(\sinh\mu\cos\nu,\ \cosh\mu\sin\nu)\frac{\partial f}{\partial\mu}+(-\cosh\mu\sin\nu,\ \sinh\mu\cos\nu)\frac{\partial f}{\partial\nu}\right]
+\end{array}\]
+}
+
+
+
+\qpart{
+Find $\Delta f$ in elliptical coordiantes.
+}
+
+\Spart{
+}
+\[\begin{array}{rcl}
+\Delta f&=&\nabla\circ(\nabla f)\\
+&=&\frac{\partial}{\partial\mu}(\nabla f_1)+\frac{\partial}{\partial\nu}(\nabla f_2)\\
+&=&\frac{\partial}{\partial\mu}\left[\frac{1}{(\sinh^2\mu+\sin^2\nu)}(\sinh\mu\cos\nu\frac{\partial f}{\partial\mu}-\cosh\mu\sin\nu\frac{\partial f}{\partial \mu})\right]\\
+&+&\frac{\partial}{\partial\nu}\left[\frac{1}{(\sinh^2\mu+\sin^2\nu)}(\cosh\mu\sin\nu\frac{\partial f}{\partial \nu}+\sinh\mu\cos\nu\frac{\partial f}{\partial \nu})\right]\\
+&=&\bigg[\frac{2\sinh\mu\cosh\mu}{(\sinh^2\mu+\sin^2\nu)^2}\left(\sinh\mu\cos\nu\frac{\partial f}{\partial\mu}-\cosh\mu\sin\nu\frac{\partial f}{\partial \mu}\right)\\
+&+&\frac{1}{(\sinh^2\mu+\sin^2\nu)}\left(\cosh\mu\cos\nu\frac{\partial f}{\partial\mu}+\sinh\mu\cos\nu\frac{\partial^2f}{\partial\mu^2}-\sinh\mu\sin\nu\frac{\partial f}{\partial \mu}-\cosh\mu\sin\nu\frac{\partial^2f}{\partial\mu^2}\right)\bigg]\\
+&+&\bigg[\frac{-2\sin\nu\cos\nu}{(\sinh^2\mu+\sin^2\nu)^2}(\cosh\mu\sin\nu\frac{\partial f}{\partial\nu}+\sinh\mu\cos\nu\frac{\partial f}{\partial\nu})\\
+&+&\frac{1}{(\sinh^2\mu+\sin^2\nu)}(\cosh\mu\cos\nu\frac{\partial f}{\partial\nu}+\cosh\mu\sin\nu\frac{\partial^2f}{\partial\nu^2}-\sinh\mu\sin\nu\frac{\partial f}{\partial \nu}+\sinh\mu\cos\nu\frac{\partial^2f}{\partial\mu^2})\bigg]\\
+&=&\left[\frac{(2\sinh^2\mu\cosh\mu\cos\nu-2\sinh\mu\cosh^2\mu\sin\nu)+(\sinh^2\mu+\sin^2\nu)(\cosh\mu\cos\nu-\sinh\mu\sin\nu)}{(\sinh^2\mu+\sin^2\nu)^2}\right]\frac{\partial f}{\partial\mu}\\
+&+&\left[\frac{(-2\cosh\mu\sin^2\nu\cos\nu-2\sinh\mu\sin\nu\cos^2\nu)+(\sinh^2\nu+\sin^2\nu)(\cosh\mu\cos\nu-\sinh\mu\sin\nu)}{(\sinh^2\mu+\sin^2\nu)^2}\right]\frac{\partial f}{\partial\nu}\\
+&+&\left[\frac{\sinh\mu\cos\nu-\cosh\mu\sin\nu}{(\sinh^2\mu+\sin^2\nu)}\right]\frac{\partial^2f}{\partial\mu^2}+\left[\frac{\cosh\mu\sin\nu+\sinh\mu\cos\nu}{(\sinh^2\mu+\sin^2\nu)}\right]\frac{\partial^2f}{\partial\nu^2}\\
+&=&\left[\frac{(2\sinh^2\mu\cosh\mu\cos\nu-2\sinh\mu\cosh^2\mu\sin\nu)+(\sinh^2\mu+\sin^2\nu)(\cosh\mu\cos\nu)-(\cosh^2\mu-\cos^2\nu)(\sinh\mu\sin\nu)}{(\sinh^2\mu+\sin^2\nu)^2}\right]\frac{\partial f}{\partial\mu}\\
+&+&\left[\frac{(-2\cosh\mu\sin^2\nu\cos\nu-2\sinh\mu\sin\nu\cos^2\nu)+(\sinh^2\mu+\sin^2\nu)(\cosh\mu\cos\nu)-(\cosh^2\mu-\cos^2\nu)(\sinh\mu\sin\nu)}{(\sinh^2\mu+\sin^2\nu)^2}\right]\frac{\partial f}{\partial\nu}\\
+&+&\left[\frac{a(\hat{\pmb{\mu}}_1+\hat{\pmb{\nu}}_1)}{h_\mu}\right]\frac{\partial^2 f}{\partial\mu^2}+\left[\frac{a(\hat{\pmb{\mu}}_2+\hat{\pmb{\nu}}_2)}{h_\mu}\right]\frac{\partial^2 f}{\partial\nu^2}\\
+&=&\left[\frac{-\sinh^2\mu\cosh\mu\cos\nu+\sinh\mu\cosh^2\mu\sin\nu+\cosh\mu\sin^2\nu\cos\nu+\sinh\mu\sin\nu\cos^2\nu}{(\sinh^2\mu+\sin^2\nu)^2}\right]\frac{\partial f}{\partial\mu}\\
+&+&\left[\frac{-\cosh\mu\sin^2\nu\cos\nu-\sinh\mu\sin\nu\cos^2\nu+\sinh^2\mu\cosh\mu\cos\nu-\sinh\mu\cosh^2\mu\sin\nu}{(\sinh^2\mu+\sin^2\nu)^2}\right]\frac{\partial f}{\partial\nu}\\
+&+&\left[\frac{a(\hat{\pmb{\mu}}_1+\hat{\pmb{\nu}}_1)}{h_\mu}\right]\frac{\partial^2 f}{\partial\mu^2}+\left[\frac{a(\hat{\pmb{\mu}}_2+\hat{\pmb{\nu}}_2)}{h_\mu}\right]\frac{\partial^2 f}{\partial\nu^2}\\
+&=&\left[\frac{3a^3\sinh\mu\cosh\mu(\hat{\pmb{\mu}}_1-\hat{\pmb{\mu}}_2)+a^3\sin\nu\cos\nu(\hat{\pmb{\mu}}_1+\hat{\pmb{\mu}}_2)}{h_\mu^3}\right]\frac{\partial f}{\partial\mu}
++\left[\frac{a^3\sinh\mu\cosh\mu(\hat{\pmb{\nu}}_1+\hat{\pmb{\nu}}_2)+a^3\sin\nu\cos\nu(\hat{\pmb{\nu}}_1-\hat{\pmb{\nu}}_2)}{h_\nu^3}\right]\frac{\partial f}{\partial\nu}\\
+&+&\left[\frac{a(\hat{\pmb{\mu}}_1+\hat{\pmb{\nu}}_1)}{h_\mu}\right]\frac{\partial^2 f}{\partial\mu^2}+\left[\frac{a(\hat{\pmb{\mu}}_2+\hat{\pmb{\nu}}_2)}{h_\mu}\right]\frac{\partial^2 f}{\partial\nu^2}\\
+\end{array}\]
+
+\end{document}

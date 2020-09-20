@@ -1,0 +1,134 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\question}[1] {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% enviroments
+\lstnewenvironment{code}
+  {\lstset{mathescape=true,xleftmargin=.1\textwidth}}
+  {}
+
+% if
+\newif\ifquestions
+\questionstrue
+%\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Sheet 4}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Sheet 4}
+\fancyhead[R]{\today}
+
+\setcounter{question}{3}
+\question{
+Calculte the integral $\int_C\textbf{F}\circ d\textbf{r}$ when $\textbf{F}=(-x^2y,xy^2,0)$ and $C$ is a square in teh $(x,y)$ plane with vertices at $(0,0),(l,0),(l,l),(0,l)$ which is oriented anticlockwise.
+}
+
+\solution{
+$C$ can be describe by
+\[\begin{array}{rcl}
+\textbf{p}_1(t)&=&(t,0,0),\\
+\textbf{p}_2(t)&=&(l,t,0),\\
+\textbf{p}_3(t)&=&(l-t,l,0)\ \&\\
+\textbf{p}_4(t)&=&(0,l-t,0)\ \mathrm{for}\ t\in[0,1]
+\end{array}\]
+Then
+\[\begin{array}{rcl}
+\textbf{p}_1'(t)&=&(1,0,0),\\
+\textbf{p}_2'(t)&=&(0,1,0),\\
+\textbf{p}_3'(t)&=&(-1,0,0)\ \&\\
+\textbf{p}_4'(t)&=&(0,-1,0).
+\end{array}\]
+And
+\[\begin{array}{rcccl}
+\textbf{F}(\textbf{p}_1(t))&=&\textbf{F}(t,0,0)&=&\textbf{0},\\
+\textbf{F}(\textbf{p}_2(t))&=&\textbf{F}(l,t,0)&=&(-l^2t,lt^2,0),\\
+\textbf{F}(\textbf{p}_3(t))&=&\textbf{F}(l-t,l,0)&=&(-l(l-t)^2,(l-t)l^2,0)\ \&\\
+\textbf{F}(\textbf{p}_4(t))&=&\textbf{F}(0,l-t,0)&=&\textbf{0}.
+\end{array}\]
+\[\begin{array}{rcl}
+\displaystyle{\int_C\textbf{F}(\textbf{r})\circ d\textbf{r}}&=&\displaystyle{\sum_{i=1}^4\int_0^1\textbf{F}(\textbf{p}_i(t))\circ\textbf{p}_i'(t)dt}\\
+&=&\displaystyle{0+\int_0^1(-l^2t,lt^2,0)\circ(0,1,0)dt+\int_0^1(-l(l-t)^2,(l-t)l^2,0)\circ(-1,0,0)dt+0}\\
+&=&\displaystyle{\int_0^1lt^2+l(l-t)^2dt}\\
+&=&\displaystyle{\int_0^12lt^2+l^3-2l^2t\ dt}\\
+&=&\displaystyle{\frac{2lt^3}{3}+l^3t-l^2t^2\big|_0^1}\\
+&=&\displaystyle{\frac{2l}{3}}
+\end{array}\]
+}
+
+\setcounter{question}{5}
+\question{
+Let $\textbf{F}(\textbf{r})=(-y^2,x,z^2)$ and define a curve $C$ in $\reals^3$ to be the intersection of the cylinder $x^2+y^2=1$ and the plane $y+z=2$.
+}
+
+\qpart{
+Compute
+$$\int_C\textbf{F}\circ d\textbf{r}$$
+}
+
+\spart{
+The equation $x^2+y^2=1$ can be parametrised as $x(\theta)=\cos(\theta),\ y(\theta)=\sin(\theta)$ for $\theta\in[0,2\pi)$.\\
+Since $y+z=2$ then $z=2-y\equiv z(\theta)=2-\sin(\theta)$.\\
+Thus, $C$ can be descibe by $\textbf{p}(\theta)=(\cos\theta,\sin\theta,2-\sin\theta)$ for $\theta\in[0,2\pi)$.
+Then
+\[\begin{array}{rrcl}
+&\textbf{p}'(\theta)&=&(-\sin\theta,\cos\theta,2-\cos\theta)\\
+\&&\textbf{F}(\textbf{p}(\theta))&=&(-\sin^2\theta,\cos\theta,(2-\sin\theta)^2)\\
+\implies&\int_C\textbf{F}(\textbf{r})\circ d\textbf{r} &=&\int_0^{2\pi}\textbf{F}(\textbf{p}(\theta))\circ\textbf{p}'(\theta)d\theta\\
+&&=&\int_0^{2\pi}-\sin^3\theta+\cos^2\theta+(2-\cos\theta)(2-\sin\theta)^2d\theta\\
+&&=&\int_0^{2\pi}-\sin\theta(1-\cos^2\theta)+\frac{1}{2}(1+\cos2\theta)+2(2-\sin\theta)^2-\cos\theta(2-\sin\theta)^2d\theta\\
+&&=&\int_0^{2\pi}-\sin\theta+\sin\theta\cos^2\theta+\frac{1}{2}+\frac{1}{2}\cos2\theta+8-8\sin\theta+2\sin^2\theta-\cos\theta(2-\sin\theta)^2d\theta\\
+&&=&\cos\theta-\frac{1}{3}(\cos^3\theta)+\frac{\theta}{2}+\frac{1}{4}(\sin2\theta)+8\theta-8\cos\theta+\theta-\frac{1}{2}(\sin2\theta)+\frac{1}{3}(2-\sin\theta)^3\bigg|_0^{2\pi}\\
+&&=&[1-\frac{1}{3}+\pi+0+16\pi-8+2\pi-0+\frac{8}{3}]-[1-\frac{1}{3}+0+0+0-8+0+0+\frac{8}{3}]\\
+&&=&19\pi
+\end{array}\]
+}
+
+\qpart{
+Compute
+$$\int_S\nabla\times\textbf{F}\circ d\textbf{S}$$
+where $S$ is a surface of your choice which boundary $\partial S$ coinciding with the curve $C$. Hence show that Stokes' theorem is satisfied.
+}
+
+\spart{
+%TODO
+}
+
+\end{document}

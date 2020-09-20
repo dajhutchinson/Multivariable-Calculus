@@ -1,0 +1,216 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\question}[1] {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% if
+\newif\ifquestions
+\questionstrue
+%\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Sheet 1}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Sheet 1}
+\fancyhead[R]{\today}
+
+\setcounter{question}{2}
+\question{
+Let $\textbf{F}:\real^2 \to \real^3$ be given by
+$$\textbf{F}(\textbf{x})= (x_1^2x_2, sin(x_1+x)2, e^{x_1x_2})$$
+}
+
+\qpart{
+Compute the matrix $\textbf{F}'(\textbf{x})$ of partial derivatives, $\frac{\partial F_i}{\partial x_j}$.
+}
+
+\spart{
+\[\begin{array}{rcl}
+\textbf{F}'(\textbf{x})&=&\underline{\begin{pmatrix}
+2x_1x_2 & x_1^2 \\
+\cos(x_1+x_2) & \cos(x_1+x_2) \\
+x_2e^{x_1x_2} & x_1e^{x_1x_2}
+\end{pmatrix}}
+\end{array}\]
+}
+
+\qpart {
+Computer the directional derivative, $D_\textbf{v}\textbf{F}(\textbf{x})$, where $\textbf{v}=(1,2)$.
+}
+
+\spart {
+\[\begin{array}{rcl}
+\|\textbf{v}\|&=& \sqrt{5}\\
+D_\textbf{v}\textbf{F}(\textbf{x}) &=& \frac{1}{\|\textbf{v}\|} \begin{pmatrix}
+\frac{d}{dt}(x_1+t)^2(x_2+2t)|_{t=0}\\
+\frac{d}{dt}\sin(x_1+x_2+3t)|_{t=0}\\
+\frac{d}{dt}e^{(x_1+t)(x_2+2t)}|_{t=0}
+\end{pmatrix}\\
+&=& \frac{1}{\sqrt{5}} \begin{pmatrix}
+2(x_1+t)(x_2+2t)+2(x_1+t)^2|_{t=0}\\
+3\cos(x_1+x_2+3t)|_{t=0}\\
+(2x_1+x_2+4t)e^{(x_1+t)(x_2+2t)}|_{t=0}
+\end{pmatrix}\\
+&=& \underline{\frac{1}{\sqrt{5}} \begin{pmatrix}
+2x_1x_2+2x_1^2\\
+3\cos(x_1+x_2)\\
+(2x_1+x_2)e^{x_1x_2}
+\end{pmatrix}}
+\end{array}\]
+}
+
+\qpart{
+Compare the result from 3.2, evaluated at $\textbf{x}=\textbf{x}_0=(1,1)$, to the vector $\textbf{F}'(\textbf{x}_0)\textbf{v}$.
+}
+
+\spart{
+\[\begin{array}{rcl}
+D_\textbf{v}\textbf{F}(\textbf{x}_0) &=& \frac{1}{\sqrt{5}} \begin{pmatrix}
+4\\
+3\cos(2)\\
+3e
+\end{pmatrix}\\
+\textbf{F}'(\textbf{x}_0)\textbf{v}&=&\begin{pmatrix}
+2 & 1\\
+\cos(2) & \cos(2)\\
+e & e
+\end{pmatrix}\begin{pmatrix}
+1\\
+2
+\end{pmatrix}\\
+&=&\underline{\begin{pmatrix}
+4\\
+3\cos(2)\\
+3e
+\end{pmatrix}}
+\end{array}\]
+}
+
+\question{
+Let $\textbf{F}, \textbf{H}: \real^2 \to \real^3, \textbf{G} : \real^3 \to \real^3$. Define
+$$\textbf{F}(\textbf{x})=A\textbf{x}\mathrm{\ where\ }A=\begin{pmatrix} 1 & 2 \\ 2 & 1 \\ 1 & 0 \end{pmatrix}$$
+$$\textbf{G}(\textbf{x})=(x_1x_2, x_2x_3, \sin(x_1x_2x_3))$$
+$$\textbf{H} = \textbf{G} \circ \textbf{F}$$
+}
+
+\qpart {
+Use the chain rule to calculate $\textbf{H}'(1,1)$.
+}
+
+\spart {
+\[\begin{array}{rrcl}
+&\textbf{F}(1,1) &=&(3,3,1)\\
+\&&\textbf{G}' &=& \begin{pmatrix}
+x_2 & x_1 & 0\\
+0 & x_3 & x_2\\
+x_2x_3\cos(x_1x_2x_3) & x_1x_3\cos(x_1x_2x_3) & x_1x_2\cos(x_1x_2x_3)
+\end{pmatrix}\\
+\implies& (\textbf{G}' \circ \textbf{F})(1,1) &=& \textbf{G}'(3,3,1)\\
+&&=& \begin{pmatrix}
+3 & 3 & 0\\
+0 & 1 & 3\\
+3\cos(9) & 3\cos(9) & 9\cos(9)
+\end{pmatrix}\\
+\mathrm{Chain\ rule}& \textbf{H}' &=& (\textbf{G}' \circ \textbf{F})\textbf{F}'\\
+&&=&\begin{pmatrix}
+3 & 3 & 0\\
+0 & 1 & 3\\
+3\cos(9) & 3\cos(9) & 9\cos(9)
+\end{pmatrix}\begin{pmatrix}
+1 & 2 \\
+2 & 1 \\
+1 & 0
+\end{pmatrix}\\
+&&=& \underline{\begin{pmatrix}
+9 & 9\\
+5 & 1\\
+18\cos(9) & 9\cos(9)
+\end{pmatrix}}
+\end{array}\]
+}
+
+\qpart {
+Calculate $\textbf{H}'(1,1)$ directly.
+}
+
+\spart {
+\[\begin{array}{rrcl}
+&\textbf{H} &=& ((x_1+2x_2)(2x_1+x_2), x_1(2x_1+x_2), \sin(x_1(x_1+2x_2)(2x_1+x_2)))\\
+\implies& \textbf{H}' &=& \begin{pmatrix}
+(2x_1+x_2)+2(x_1+2x_2) & 2(2x_1+x_2)+(x_1+2x_2)\\
+(2x_1+x_2)+2x_1 & x_1\\
+ i & j
+\end{pmatrix}\\
+where&i&=&\left[(x_1+2x_2)(2x_1+x_2)+x(2x_1+x_2)+2x_1(x_1+2x_2)\right]\cos(x_1(x_1+2x_2)(2x_1+x_2))]]\\
+\&&j&=&\left[2x_1(2x_1+x_2)+x_1(x_1+2x_2)\right]\cos(x_1(x_1+2x_2)(2x_1+x_2))\\
+\implies& \textbf{H}'(1,1) &=& \begin{pmatrix}
+3+2\times3 & 2\times3 +3\\
+3+2 & 1\\
+[3\times3+1\times3+2\times3]\cos(1\times3\times3) & [2\times3+1\times3]\cos(1\times3\times3)
+\end{pmatrix}\\
+&&=& \underline{\begin{pmatrix}
+9 & 9\\
+5 & 1\\
+18\cos(9) & 9\cos(9)
+\end{pmatrix}}
+\end{array}\] \\
+}
+
+\question{
+Consider the coupled nonlinear system of equations given by
+$$x^3+e^y=s,\quad \cos x+xy=t$$
+When $(s,t)=(1,1)$ the solution is given by $(x,y)=(0,0)$. Can we guarantee unique solutions $(x,y)$ for values of $(s,t)$ near $(1,1)$?
+}
+
+\solution{
+\[\begin{array}{rrcl}
+\mathrm{Let}&\textbf{F}:\real^2\to\real^2 &st& \textbf{F}=(s,t)\\
+\implies&\textbf{F}'&=&\begin{pmatrix}
+3x^2 & e^y\\
+-\sin(x)+y & x
+\end{pmatrix}\\
+\implies& J_\textbf{F} &=& 3x^3+e^y(\sin(x)+y)\\
+\implies& J_\textbf{F}(0,0) &=& 0 + 1(sin(0)+0)\\
+&&=& \underline{0}
+\end{array}\]
+Since $J_{\textbf{F}}(0,0)$ is not invertible, by the \textit{inverse function theorem}, we \underline{cannot} guarantee unique solutions near $(1,1)$.
+}
+
+\end{document}

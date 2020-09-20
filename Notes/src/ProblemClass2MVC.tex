@@ -1,0 +1,223 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+\newcounter{spart}[question]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\newspart} {\stepcounter{spart}}
+\newcommand{\QUESTION} {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ \fi}
+\newcommand{\question}[1] {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\spart}[1] {\newspart\ifsolutions\textbf{My Solution \arabic{question}.\arabic{spart}}\\ #1\\ \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% if
+\newif\ifquestions
+\questionstrue
+%\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Class 2}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Class 2}
+\fancyhead[R]{\today}
+
+\QUESTION
+
+\qpart{
+Explain what is meant by a linear map.
+}
+
+\spart{
+A map, $\textbf{F} : \real^m \to \real^n$, is linear if $\forall\ \textbf{x}, \textbf{y} \& \lambda,\mu \in\real\ \textbf{F}(\lambda\textbf{x}+\mu\textbf{y}))=\lambda\textbf{F}(\textbf{x})+\mu\textbf{F}(\textbf{y})$.
+}
+
+\qpart{
+Is $\textbf{f}(\textbf{x})=(x_2+x_3, x_1+x_2)$ a linear map. Explain why.
+}
+
+\spart{
+Yes.\\
+Let $a\in\real$ and $\textbf{x},\textbf{y}\in\real^3$.
+\[\begin{array}{rcl}
+\textbf{f}(a\textbf{x}+\textbf{y})&=&\textbf{f}(a(x_1,x_2,x_3)+(y_1,y_2,y_3))\\
+&=&((ax_1+y_1, ax_2+y_2, ax_3+y_3))\\
+&=&((ax_2+y_2)+(ax_3+y_3), (ax_1+y_1)+(ax_2+y_2))\\
+&=&(a(x_2+x_3)+(y_2+y_3), a(x_1+x_2)+(y_1+y_2))\\
+&=&a(x_2+x_3,x_1+x_2)+(y_2+y_3,y_1+y_2)\\
+&=&a\textbf{f}(\textbf{x})+\textbf{f}(\textbf{y})
+\end{array}\]
+}
+
+\qpart{
+Is $\textbf{f}(\textbf{x})=(x_2x_3, x_1x_2)$ a linear map. Explain why.
+}
+
+\spart{
+No.\\
+Let $\textbf{x},\textbf{y}\in\real^3$.
+\[\begin{array}{rcl}
+\textbf{f}(\textbf{x}+\textbf{y})&=&\textbf{f}((x_1,x_2,x_3)+(y_1,y_2,y_3))\\
+&=&\textbf{f}((x_1+y_1,x_2+y_2,x_3+y_3))\\
+&=&(x_2y_2x_3y_3,x_1y_1x_2y_2)\\
+&\neq&(x_2x_3,x_1x_2)+(y_2y_3,y_1y_2)\\
+&=&\textbf{f}(\textbf{x})+\textbf{f}(\textbf{y})
+\end{array}\]
+}
+
+\question{
+Let $\textbf{F}:\real^3\to\real^2$ be defined by $\textbf{F}(x)=(x_2x_3, x_1x_2)$.\\
+Find the derivative of $\textbf{F}$ in the direction $(1,-1,1)$ using two independent methods.
+}
+
+\solution{
+\[\begin{array}{rrcl}
+&\textbf{F}'&=&\begin{pmatrix}
+\frac{\partial F_1}{\partial x_1} & \frac{\partial F_1}{\partial x_2} & \frac{\partial F_1}{\partial x_3}\\
+\frac{\partial F_2}{\partial x_1} & \frac{\partial F_2}{\partial x_2} & \frac{\partial F_2}{\partial x_3}\\
+\end{pmatrix}\\
+&&=&\begin{pmatrix}
+0 & x_3 & x_2\\
+x_2 & x_1 & 0
+\end{pmatrix}\\
+\implies&\textbf{F}'(1,-1,1)&=&\begin{pmatrix}
+0 & 1 & -1\\
+-1 & 1 & 0
+\end{pmatrix}\\
+\end{array}\]
+}
+
+\question{
+Let
+$$\textbf{F}(u,v,w)=(v^2+uw, u^2+w^2, u^2v-w^3)$$
+and
+$$\textbf{G}(x,y)=(xy^3,x^2-y^2,3x+5y)$$
+and define $\textbf{H}(x,y)=(\textbf{F}\circ\textbf{G})(x,y)$. Compute $\textbf{H}'(-1,1)$.
+}
+
+\solution{
+\[\begin{array}{rrcl}
+\mathrm{By\ Chain\ Rule}&\textbf{H}&=&(\textbf{F}'\circ\textbf{G})\textbf{G}'\\
+&\textbf{G}'&=&\begin{pmatrix}
+y^3 & 3xy^2\\
+2x & -2y\\
+3 & 5
+\end{pmatrix}\\
+\implies&\textbf{G}'(-1,1)&=&\begin{pmatrix}
+1 & -3\\
+-2 & -2\\
+3 & 5
+\end{pmatrix}\\
+&\textbf{F}'&=&\begin{pmatrix}
+w & 2v & u\\
+2u & 0 & 2w\\
+2uv & u^2 & -3w^2
+\end{pmatrix}\\
+&\textbf{G}(-1.1)&=&(-1,0,2)\\
+\implies&(\textbf{F}'\circ\textbf{G})(-1,1)&=&\textbf{F}'(-1,0,2)\\
+&&=&\begin{pmatrix}
+2 & 0 & -1\\
+-2 & 0 & 4\\
+0 & 1 & -12
+\end{pmatrix}\\
+\implies&\textbf{H}'&=&\begin{pmatrix}
+2 & 0 & -1\\
+-2 & 0 & 4\\
+0 & 1 & -12
+\end{pmatrix}\begin{pmatrix}
+1 & -3\\
+-2 & -2\\
+3 & 5
+\end{pmatrix}\\
+&&=&\begin{pmatrix}
+-1 & -11\\
+10 & 26\\
+-38 & -62
+\end{pmatrix}
+\end{array}\]
+}
+
+\question{
+Given
+$$z=f\left(\frac{x+y}{x-y}\right)$$
+show that
+$$x\frac{\partial z}{\partial x}+y\frac{\partial z}{\partial y}=0$$
+}
+
+\solution{
+\[\begin{array}{rcl}
+x\dfrac{\partial z}{\partial x}+y\dfrac{\partial z}{\partial y}&\equiv&x\dfrac{\partial}{\partial x}\left(\dfrac{x+y}{x-y}\right)f'\left(\dfrac{x+y}{x-y}\right)+y\dfrac{\partial}{\partial y}\left(\dfrac{x+y}{x-y}\right)f'\left(\dfrac{x+y}{x-y}\right)\\
+&=&x\left[\dfrac{1}{x-y}-\dfrac{x+y}{(x-y)^2}\right]f'\left(\dfrac{x+y}{x-y}\right)+y\left[\dfrac{1}{x-y}-\dfrac{x+y}{(x-y)^2}\right]f'\left(\dfrac{x+y}{x-y}\right)\\
+&=&x\left[\dfrac{-2y}{(x-y)^2}\right]f'\left(\dfrac{x+y}{x-y}\right)+y\left[\dfrac{2x}{(x-y)^2}\right]f'\left(\dfrac{x+y}{x-y}\right)\\
+&=&\left[\dfrac{-2xy+2xy}{(x-y)^2}\right]f'\left(\dfrac{x+y}{x-y}\right)\\
+&=&0
+\end{array}\]
+}
+
+\question{
+Show that the pair of equations
+$$x^2-y^2-u^3+v^2+4=0\quad 2xy+y^2-2u^2+3v^4+8=0$$
+determine local functions $u(x,y)$ and $v(x,y)$ defined for $(u,v)=(2,1)$ such that $(x,y)=(2,-1)$.\\
+Computer $\frac{\partial u}{\partial x}$ at $(x,y)=(2,-1),\ (u,v)=(2,1)$.
+}
+
+\spart{
+\[\begin{array}{lcl}
+\frac{\partial}{\partial x} (x^2-y^2-u^3+v^2+4) &=& 2x-3\frac{\partial u}{\partial x}u^2+2\frac{\partial v}{\partial x}v=0\\
+\frac{\partial}{\partial y} (x^2-y^2-u^3+v^2+4) &=& -2y-3\frac{\partial u}{\partial y}u^2+2\frac{\partial v}{\partial y}v=0\\
+\frac{\partial}{\partial x} (2xy+y^2-2u^2+3v^4+8) &=& 2y-4\frac{\partial u}{\partial x}u+12\frac{\partial v}{\partial x}v^3=0\\
+\frac{\partial}{\partial y} (2xy+y^2-2u^2+3v^4+8) &=& 2x+2y-4\frac{\partial u}{\partial y}u+12\frac{\partial v}{\partial y}v^3=0\\
+\end{array}\]
+These can be simplied to
+$$\begin{pmatrix} 2x & -2y \\ 2y & 2x+2y\end{pmatrix} + \begin{pmatrix}-3u^2 & 2v\\-4 & 12v^3\end{pmatrix}\begin{pmatrix}\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}\end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$$
+WTS $\begin{pmatrix}-3u^2 & 2v\\-4 & 12v^3\end{pmatrix}$ is non-singular so $\begin{pmatrix}\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\ \frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}\end{pmatrix}$ exists.\\
+\[\begin{array}{rcl}
+\mathrm{Set\ }(u,v)=(2,1)&\implies& \begin{pmatrix}-3u^2 & 2v\\-4 & 12v^3\end{pmatrix}=\begin{pmatrix} -12 & 2 \\ -8 & 12 \end{pmatrix}\\
+\begin{vmatrix}-12 & 2 \\ -8 & 12\end{vmatrix}&=&-144+16=-128\neq0
+\end{array}\]
+So solutions $u(x,y),\ v(x,y)$ exists close to $(u,v)=(2,1),\ (x,y)=(2,-1)$ by implicit function theorem.
+}
+
+\spart{
+\[\begin{array}{rrcl}
+&\begin{pmatrix} u_x & u_y \\ v_x & v_y\end{pmatrix} &=&\begin{pmatrix} -3u^2 & 2v \\ 4u & 12v^3 \end{pmatrix}^{-1}\begin{pmatrix} 2x & -2y \\ 2y & 2x+2y\end{pmatrix}\\
+&&=&\dfrac{-1}{-128}\begin{pmatrix} 21v^3 & 2v \\ 4u & -3u^2\end{pmatrix}\begin{pmatrix} 2x & -2y \\ 2y & 2x+2y\end{pmatrix}\\
+\implies&u_x&=&\frac{-1}{-128}[(12v^3)(2x)+(2v)(2y)]\\
+&&=&\frac{-1}{-128}[(12)(4)+(2)(-1)]\\
+&&=&\dfrac{23}{64}
+\end{array}\]
+}
+
+\end{document}

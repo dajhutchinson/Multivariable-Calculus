@@ -1,0 +1,157 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\Question} {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ \fi}
+\newcommand{\question}[1] {\newquestion \ifquestions \textbf{Question \arabic{question}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\Solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}} #1 \fi}
+\newcommand{\spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\Spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}} #1 \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% enviroments
+\lstnewenvironment{code}
+  {\lstset{mathescape=true,xleftmargin=.1\textwidth}}
+  {}
+
+% if
+\newif\ifquestions
+\questionstrue
+\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Sheet 2}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Sheet 2}
+\fancyhead[R]{\today}
+
+\setcounter{question}{3}
+\Question
+
+\qpart{
+Compute the gradient of $f(\textbf{r})=\textbf{a}\circ\textbf{r}$, where $\textbf{a}\in\real^3$ is a fixed vector.
+}
+
+\Spart{
+\[\begin{array}{rrcl}
+&f(\textbf{r})&=&\textbf{a}\circ\textbf{r}\\
+&&=&a_1x+a_2y+a_3z\\
+\implies&\nabla f(\textbf{r})&=&(a_1, a_2, a_3)
+\end{array}\]
+}
+
+\qpart{
+Compute the divergence of $\textbf{v}(\textbf{r})=\nabla r^n$, where $r=|\textbf{r}|$.\\
+For which value of $n$ does the divergence vanish?
+}
+
+\Spart{
+\[\begin{array}{rrcl}
+&\textbf{v}(\textbf{r})&=&\nabla r^n\\
+\mathrm{Since\ }&r&=&\sqrt{x^2+y^2+z^2}\\
+\implies&\nabla\circ\textbf{v}(\textbf{r})&=&\nabla\circ\nabla r^n\\
+&&=&\nabla\circ\nabla(x^2+y^2+z^2)^{n/2}\\
+&&=&\nabla\circ\left(xn(x^2+y^2+z^2)^{\frac{n}{2}-1}, yn(x^2+y^2+z^2)^{\frac{n}{2}-1}, zn(x^2+y^2+z^2)^{\frac{n}{2}-1}\right)\\
+&&=&\left(n(x^2+y^2+z^2)^{\frac{n}{2}-1}+xn(xn-2x)(x^2+y^2+z^2)^{\frac{n}{2}-2}\right)\\
+&&+&\left(n(x^2+y^2+z^2)^{\frac{n}{2}-1}+yn(yn-2y)(x^2+y^2+z^2)^{\frac{n}{2}-2}\right)\\
+&&+&\left(n(x^2+y^2+z^2)^{\frac{n}{2}-1}+zn(zn-2z)(x^2+y^2+z^2)^{\frac{n}{2}-2}\right)\\
+&&=&3n(x^2+y^2+z^2)^{\frac{n}{2}-1}+n(x^n-2x^2+y^2n-2y^2+z^2n-2z^2)(x^2+y^2+z^2)^{\frac{n}{2}-2}\\
+&&=&n(x^2+y^2+z^2)^{\frac{n}{2}-2}\left(3(x^2+y^2+z^2)+(x^n-2x^2+y^2n-2y^2+z^2n-2z^2)\right)\\
+&&=&n(x^2+y^2+z^2)^{\frac{n}{2}-2}\left((n+1)(x^2+y^2+z^2)\right)
+\end{array}\]
+This equals zero if $n=0$ or $n=-1$.
+}
+
+\qpart{
+Compute the curl of $\textbf{v}(\textbf{r})=\pmb{\omega}\times\textbf{r}$, where $\pmb{\omega}\in\real^3$ is a fixed vector.
+}
+
+\Spart{
+\[\begin{array}{rrcl}
+&\textbf{v}(\textbf{r})&=&\pmb{\omega}\times\textbf{r}\\
+&&=&\begin{vmatrix}
+\textbf{e}_1 & \textbf{e}_2 & \textbf{e})3\\
+\omega_1 & \omega_2 & \omega_3\\
+x & y & z
+\end{vmatrix}\\
+&&=&\left(\begin{vmatrix} \omega_2 & \omega_3 \\ y & z\end{vmatrix}, \begin{vmatrix} \omega_1 & \omega_3 \\ x & z\end{vmatrix}, \begin{vmatrix} \omega_1 & \omega_2 \\ x & y\end{vmatrix}\right)\\
+&&=&(\omega_2z-\omega_3y,\ \omega_1z-\omega_3x,\ \omega_1y-\omega_2x)\\
+\mathrm{Then}&\nabla\times\textbf{v}&=&\begin{vmatrix}
+\textbf{e}_1 & \textbf{e}_2 & \textbf{e}_3\\
+\partial x & \partial y & \partial z\\
+\omega_2z-\omega_3y & \omega_1z-\omega_3x & \omega_1y-\omega_2x
+\end{vmatrix}\\
+&&=&\bigg(\frac{\partial}{\partial y}(\omega_1y-\omega_2x) - \frac{\partial}{\partial z}(\omega_1z-\omega_3x)\\
+&&&,\frac{\partial}{\partial x}(\omega_1y-\omega_2x) - \frac{\partial}{\partial z}(\omega_2z-\omega_3y)\\
+&&&,\frac{\partial}{\partial x}(\omega_1z-\omega_3x) - \frac{\partial}{\partial y}(\omega_2z-\omega_3y)\bigg)\\
+&&=&(\omega_1-\omega_1,-\omega_2-\omega_2,-\omega_3-(-\omega_3))\\
+&&=&(0,-2\omega_2, 0)
+\end{array}\]
+}
+
+\setcounter{question}{6}
+\question{
+Without doing any calculations, how do you know the following result is false?
+$$\nabla\circ(\textbf{u}\times\textbf{v})=\textbf{u}\circ(\nabla\times\textbf{v})+\textbf{v}\circ(\nabla\times\textbf{u})$$
+Find a corrected version of this result
+}
+
+\solution{
+The cross product is anticommutative, but this identity shows it to be commutative.\\
+The correct identity is
+$$\nabla\circ(\textbf{u}\times\textbf{v})=\textbf{v}\circ(\nabla\times\textbf{u})-\textbf{u}\circ(\nabla\times\textbf{v})$$
+}
+
+\question{
+Show that, for vector fields $\textbf{u}(\textbf{r}), \textbf{v}(\textbf{r})$ both in $\real^3$
+$$\nabla\times(\textbf{u}\times\textbf{v})=(\nabla\circ\textbf{v})\textbf{u}-(\nabla\circ\textbf{u})\textbf{v}+(\textbf{v}\circ\nabla)\textbf{u}-(\textbf{u}\circ\nabla)\textbf{v}$$
+}
+
+\Solution{
+\[\begin{array}{rcl}
+[\nabla\times(\textbf{u}\times\textbf{v})]_i&=&\varepsilon_{ijk}\frac{\partial}{\partial x_j}[\textbf{u}\times\textbf{v}]_k\\
+&=&\varepsilon_{ijk}\frac{\partial}{\partial x_j}\varepsilon_{klm}(u_lv_m)\\
+&=&\varepsilon_{ijk}\varepsilon_{klm}\frac{\partial}{\partial x_j}(u_lv_m)\\
+&=&\varepsilon_{kij}\varepsilon_{klm}\left(\frac{\partial u_l}{\partial x_j}v_m+u_l\frac{\partial v_m}{\partial x_j}\right)\\
+&=&\left(\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl}\right)\left(\frac{\partial u_l}{\partial x_j}v_m+u_l\frac{\partial v_m}{\partial x_j}\right)\\
+&=&\left(\frac{\partial u_i}{\partial x_j}v_j+u_i\frac{\partial v_j}{\partial x_j}\right)-\left(\frac{\partial u_j}{\partial x_j}v_i+u_j\frac{\partial v_i}{\partial x_j}\right)\\
+&=&\big([(\textbf{v}\circ\nabla)\textbf{u}]_i+[(\nabla\circ\textbf{v})\textbf{u}]_i\big)-\big([(\nabla\circ\textbf{u})\textbf{v}]_i+[(\textbf{u}\circ\nabla)\textbf{v}]_i\big)
+\end{array}\]
+This is true for $i=1,2,3$ so identity holds.
+}
+
+\end{document}

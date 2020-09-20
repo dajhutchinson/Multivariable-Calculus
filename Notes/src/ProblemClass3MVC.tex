@@ -1,0 +1,128 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in, paperwidth=8.3in, paperheight=11.7in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\pagestyle{fancy}
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+% Counters
+\newcounter{question}
+\newcounter{qpart}[question]
+\newcounter{qqpart}[qpart]
+
+% commands
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\newquestion} {\stepcounter{question}}
+\newcommand{\newqpart} {\stepcounter{qpart}}
+\newcommand{\newqqpart} {\stepcounter{qqpart}}
+\newcommand{\question}[2] {\newquestion \ifquestions \textbf{Question \arabic{question} - #1}\\ #2\\ \fi}
+\newcommand{\Qpart}[1] {\newquestion\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\qpart}[1] {\newqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\qqpart}[1] {\newqqpart \ifquestions \textbf{Question \arabic{question}.\arabic{qpart}.\arabic{qqpart}}\\ #1\\ \fi}
+\newcommand{\solution}[1] {\ifsolutions\textbf{My Solution \arabic{question}}\\ #1\\ \fi}
+\newcommand{\spart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}}\\ #1\\ \fi}
+\newcommand{\sspart}[1] {\ifsolutions\textbf{My Solution \arabic{question}.\arabic{qpart}.\arabic{qqpart}}\\ #1 \fi}
+\newcommand{\doubleplus} {+\kern-1.3ex+\kern0.8ex}
+\renewcommand{\headrulewidth}{0pt}
+
+% enviroments
+\lstnewenvironment{code}
+  {\lstset{mathescape=true,xleftmargin=.1\textwidth}}
+  {}
+
+% if
+\newif\ifquestions
+\questionstrue
+%\questionsfalse
+\newif\ifsolutions
+\solutionstrue
+%\solutionsfalse
+
+% Cover page title
+\title{Multivariable Calculus - Problem Class $3$}
+\author{Dom Hutchinson}
+\date{\today}
+\maketitle
+
+% Header
+\fancyhead[L]{Dom Hutchinson}
+\fancyhead[C]{Multivariable Calculus - Problem Class $3$}
+\fancyhead[R]{\today}
+
+\setcounter{question}{1}
+\setcounter{qpart}{2}
+\setcounter{qqpart}{2}
+\qqpart{
+Caclulate $(\textbf{u}\circ\nabla)\textbf{u}$ in cyclindrical coordinates, where $\textbf{u}=u_r\hat{\textbf{r}}+u_\theta\hat{\pmb{\theta}}+u_z\hat{\textbf{z}}$.
+}
+
+\sspart{
+\[\begin{array}{rrcl}
+\mathrm{N.B.}&\nabla&=&\sum_{\alpha=1}^3\frac{\textbf{q}_\alpha}{h_\alpha}\frac{\partial}{\partial q_\alpha}\\
+&&=&\hat{\pmb{r}}\frac{\partial}{\partial r}+\frac{\hat{\pmb{\theta}}}{r}\frac{\partial}{\partial\theta}+\hat{\pmb{z}}\frac{\partial}{\partial z}\\
+\&&\hat{\pmb{r}}&=&(\cos\theta,\sin\theta,0)\\
+&\hat{\pmb{\theta}}&=&(-\sin\theta,\cos\theta,0)\\
+&\hat{\pmb{z}}&=&(0,0,1)\\
+
+\\&(\textbf{u}\circ\nabla)\textbf{u}&=&\left(u_r\frac{\partial}{\partial r}+\frac{u_\theta}{r}\frac{\partial}{\partial \theta}+u_z\frac{\partial}{\partial z}\right)\left(u_r\hat{\pmb{r}}+u_\theta\hat{\pmb{\theta}}+u_z\hat{\pmb{z}}\right)\\
+&&&\mathrm{Since\ }\hat{\pmb{r}}\ \&\ \hat{\pmb{\theta}} \mathrm{depend\ on\ }\theta\\
+&&=&\left(u_r\frac{\partial}{\partial r}+\frac{u_\theta}{r}\frac{\partial}{\partial \theta}+u_z\frac{\partial}{\partial z}\right)\hat{\pmb{r}}
++\left(u_r^2\frac{\partial\hat{\pmb{r}}}{\partial r}+\frac{u_\theta u_r}{r}\frac{\partial\hat{\pmb{r}}}{\partial\theta}+u_zu_r\frac{\partial\hat{\pmb{r}}}{\partial z}\right)\\
+&&+&\left(u_r\frac{\partial}{\partial r}+\frac{u_\theta}{r}\frac{\partial}{\partial \theta}+u_z\frac{\partial}{\partial z}\right)\hat{\pmb{\theta}}
++\left(u_ru_\theta\frac{\partial\hat{\pmb{\theta}}}{\partial r}+\frac{u_\theta^2}{r}\frac{\partial\hat{\pmb{\theta}}}{\partial\theta}+u_zu_\theta\frac{\partial\hat{\pmb{\theta}}}{\partial z}\right)\\
+&&+&\left(u_r\frac{\partial}{\partial r}+\frac{u_\theta}{r}\frac{\partial}{\partial \theta}+u_z\frac{\partial}{\partial z}\right)\hat{\pmb{z}}
+\end{array}\]
+}
+
+\newqpart
+\setcounter{qqpart}{0}
+\qqpart{
+Let $f(r)$ be a smooth scalar-valued function of $r=|\textbf{r}|$, and let $\textbf{a}\in\real^3$ be a constance vector. Calculate
+$$\nabla\times(\textbf{r}\times\textbf{a}f(r))$$
+}
+
+\sspart{
+\[\begin{array}{rcl}
+[\nabla\times(\textbf{r}\times\textbf{a}f(r))]_i&=&\varepsilon_{ijk}\frac{\partial}{\partial x_j}[\textbf{r}\times\textbf{a}f(r)]_k\\
+&=&\varepsilon_{ijk}\frac{\partial}{\partial x_j}\varepsilon_{klm}x_lf(r)a_m\\
+&=&\varepsilon_{kij}\varepsilon_{klm}\frac{\partial}{\partial x_j}(x_lf(r)a_m)\\
+&=&[\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl}]a_m\left(f(r)\frac{\partial x_l}{\partial x_j}+x_l\frac{\partial f(r)}{\partial x)j}\right)\\
+&=&[\delta_{il}a_j-a_i\delta_{jl}]\left(f(r)\delta_{jl}+x_l\frac{\partial r}{\partial x_j}\frac{\partial f(r)}{\partial r}\right)\\
+&=&[\delta_{il}a_j-a_i\delta_{jl}]\left(f(r)\delta_{jl}+\frac{x_lx_j}{r}f'(r)\right)\\
+&=&\delta_{ij}a_jf(r)-3a_if(r)+\frac{a_jx_ix_j}{r}f'(r)-\frac{a_if'(r)}{r}x_jx_j\\
+&=&a_if(r)-3a_if(r)+\frac{f'(r)}{r}(\textbf{a}\circ\textbf{r})x_i-rf'(r)a_i\\
+\implies\nabla\times(\textbf{a}f(r))&=&-2f(r)\textbf{a}-rf'(r)\textbf{a}+\frac{f'(r)}{r}(\textbf{a}\circ\textbf{r})x_i
+\end{array}\]
+\textit{N.B.} - $\delta_{ij}\times\delta_{ij}=3$ \& $\sum_{j=1}^3x_j^2=r^2$
+}
+
+\qqpart{
+Let $\textbf{u}$ be a vector field in $C(\real^3,\real^3)$. Show that
+$$\textbf{u}\times(\nabla\times\textbf{u})=\frac{1}{2}\nabla(\textbf{u}\circ\textbf{u})-(\textbf{u}\circ\nabla)\textbf{u}$$
+}
+
+\sspart{
+\[\begin{array}{rcl}
+[\textbf{u}\times(\nabla\times\textbf{u})]_i&=&\varepsilon_{ijk}u_j[\nabla\times\textbf{u}_k\\
+&=&\varepsilon_{ijk}u_j\varepsilon_{klm}\frac{\partial}{\partial x_i}u_m\\
+&=&\varepsilon_{kij}\varepsilon_{klm}u_j\frac{\partial}{\partial x_i}u_m\\
+&=&[\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl}]u_j\frac{\partial}{\partial x_i}u_m\\
+&=&u_j\frac{\partial}{\partial x_i}u_j-u_j\frac{\partial}{\partial x_j}u_i\\
+&=&\left[\frac{\partial}{\partial x_i}\left(\frac{1}{2}u_j^2\right)\right]-(\textbf{u}\circ\nabla)u_i\\
+&=&\left[\frac{1}{2}\nabla(\textbf{u}\circ\textbf{u})-(\textbf{u}\circ\nabla)\textbf{u}\right]_i
+\end{array}\]
+}
+
+\end{document}
